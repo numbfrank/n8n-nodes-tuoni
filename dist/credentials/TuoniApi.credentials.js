@@ -42,12 +42,12 @@ class TuoniApi {
                 displayName: 'Authentication Method',
                 name: 'authMode',
                 type: 'options',
-                default: 'jwt',
+                default: 'basic',
                 options: [
-                    { name: 'JWT (Login then Bearer)', value: 'jwt' },
                     { name: 'Basic (Username/Password)', value: 'basic' },
+                    { name: 'JWT (Requires fresh credential)', value: 'jwt' },
                 ],
-                description: 'Choose how to authenticate of API requests',
+                description: 'Basic auth is recommended and works for all operations',
             },
             {
                 displayName: 'Token',
@@ -108,7 +108,7 @@ class TuoniApi {
                     let token = String((_f = credentials.token) !== null && _f !== void 0 ? _f : '');
                     if (!token) {
                         const axios = require('axios');
-                        const response = await axios.post(`${credentials.serverUrl}/api/v1/auth/login`, {}, {
+                        const response = await axios.post(`${credentials.serverUrl}/api/v1/auth/login`, '', {
                             auth: {
                                 username: String((_g = credentials.username) !== null && _g !== void 0 ? _g : ''),
                                 password: String((_h = credentials.password) !== null && _h !== void 0 ? _h : ''),

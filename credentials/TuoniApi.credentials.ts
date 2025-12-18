@@ -53,12 +53,12 @@ export class TuoniApi implements ICredentialType {
 			displayName: 'Authentication Method',
 			name: 'authMode',
 			type: 'options',
-			default: 'jwt',
+			default: 'basic',
 			options: [
-				{ name: 'JWT (Login then Bearer)', value: 'jwt' },
 				{ name: 'Basic (Username/Password)', value: 'basic' },
+				{ name: 'JWT (Requires fresh credential)', value: 'jwt' },
 			],
-			description: 'Choose how to authenticate of API requests',
+			description: 'Basic auth is recommended and works for all operations',
 		},
 		{
 			displayName: 'Token',
@@ -127,15 +127,15 @@ export class TuoniApi implements ICredentialType {
 					};
 				}
 			} else {
-				// Regular request - use Bearer token, fetch if missing
+				// Regular request - use Bearer token
 				let token = String(credentials.token ?? '');
 				
 				if (!token) {
-					// Token missing - fetch it now
+					// Token missing - fetch it now with empty body and text/plain accept
 					const axios = require('axios');
 					const response = await axios.post(
 						`${credentials.serverUrl}/api/v1/auth/login`,
-						{},
+						'',
 						{
 							auth: {
 								username: String(credentials.username ?? ''),
