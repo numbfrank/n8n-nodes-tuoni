@@ -1,0 +1,12 @@
+{
+  "name": "tuoni-scaffold-bootstrap",
+  "private": true,
+  "version": "0.0.0",
+  "overrides": {
+    "change-case": "npm:change-case-commonjs@5.4.4"
+  },
+  "devDependencies": {
+    "@n8n/node-cli": "^0.17.0",
+    "change-case-commonjs": "^5.4.4"
+  }
+}

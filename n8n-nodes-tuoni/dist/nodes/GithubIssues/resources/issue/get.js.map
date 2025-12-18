@@ -1,0 +1,1 @@
+{"version":3,"file":"get.js","sourceRoot":"","sources":["../../../../../nodes/GithubIssues/resources/issue/get.ts"],"names":[],"mappings":";;;AACA,4DAAwD;AAExD,MAAM,mBAAmB,GAAG;IAC3B,SAAS,EAAE,CAAC,KAAK,CAAC;IAClB,QAAQ,EAAE,CAAC,OAAO,CAAC;CACnB,CAAC;AAEW,QAAA,mBAAmB,GAAsB;IACrD;QACC,GAAG,0BAAW;QACd,cAAc,EAAE,EAAE,IAAI,EAAE,mBAAmB,EAAE;KAC7C;CACD,CAAC"}
