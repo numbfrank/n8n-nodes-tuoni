@@ -1,73 +1,69 @@
-# n8n-nodes-tuoni
+# Tuoni Community Node for n8n
 
-This is an n8n community node. It lets you use GitHub Issues in your n8n workflows.
+This n8n community node integrates with a Tuoni C2 server, enabling you to automate common C2 operations in your workflows: manage agents, run commands, control listeners/payloads, handle files, react to events, and administer users/settings.
 
 [n8n](https://n8n.io/) is a [fair-code licensed](https://docs.n8n.io/sustainable-use-license/) workflow automation platform.
 
-[Installation](#installation)
-[Operations](#operations)
-[Credentials](#credentials)
-[Compatibility](#compatibility)
-[Usage](#usage)
-[Resources](#resources)
+- [Installation](#installation)
+- [Credentials](#credentials)
+- [Operations](#operations)
+- [Usage](#usage)
+- [Compatibility](#compatibility)
+- [Resources](#resources)
 
 ## Installation
 
-Follow the [installation guide](https://docs.n8n.io/integrations/community-nodes/installation/) in the n8n community nodes documentation.
+Follow the official guide for community nodes: https://docs.n8n.io/integrations/community-nodes/installation/
 
-## Operations
-
-- Issues
-    - Get an issue
-    - Get many issues in a repository
-    - Create a new issue
-- Issue Comments
-    - Get many issue comments
+Once installed, search for the node named “Tuoni” in the n8n editor.
 
 ## Credentials
 
-You can use either access token or OAuth2 to use this node.
+Create a new credential of type “Tuoni API” in n8n:
 
-### Access token
+- Server URL: Base URL to your Tuoni instance (for example, `https://tuoni.example.com`).
+- Username: Your Tuoni username.
+- Password: Your Tuoni password.
 
-1. Open your GitHub profile [Settings](https://github.com/settings/profile).
-2. In the left navigation, select [Developer settings](https://github.com/settings/apps).
-3. In the left navigation, under Personal access tokens, select Tokens (classic).
-4. Select Generate new token > Generate new token (classic).
-5. Enter a descriptive name for your token in the Note field, like n8n integration.
-6. Select the Expiration you'd like for the token, or select No expiration.
-7. Select Scopes for your token. For most of the n8n GitHub nodes, add the `repo` scope.
-    - A token without assigned scopes can only access public information.
-8. Select Generate token.
-9. Copy the token.
+The node will authenticate against Tuoni and send an `Authorization: Bearer <token>` header. A built-in test request verifies access via `/api/v1/users/me`.
 
-Refer to [Creating a personal access token (classic)](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#creating-a-personal-access-token-classic) for more information. Refer to Scopes for OAuth apps for more information on GitHub scopes.
+## Operations
 
-![Generated Access token in GitHub](https://docs.github.com/assets/cb-17251/mw-1440/images/help/settings/personal-access-tokens.webp)
+This node exposes multiple resource categories. Each category includes common CRUD and control actions aligned with Tuoni’s REST API.
 
-### OAuth2
+- Agents: list/get, active/inactive filters, mark inactive, update metadata.
+- Commands: list/get, create for an agent, stop, update.
+- Command Templates & Aliases: list/get, create/update/delete, fetch agent templates.
+- Discovery (Credentials, Hosts, Services): list/get, create/update, events, bulk archive/restore.
+- Events: get event summaries and full details.
+- Files (Storage): list/get, by path, download/upload, update, delete.
+- Jobs: list/all vs. active, get by id, pause/resume/restart.
+- Listeners: create/update/delete, start/stop.
+- Payloads & Payload Templates: list/get, create/update/delete, download.
+- Plugins: list/get per type (command/listener/payload), enable/disable command plugins.
+- Scripts: list/get info/content, fetch raw logs or log lines (with query params).
+- Settings: list/get, update one or many settings.
+- Users: list/get/me, create/update, change password (self or admin).
+- IPs: list known IPs.
 
-If you're self-hosting n8n, create a new GitHub [OAuth app](https://docs.github.com/en/apps/oauth-apps):
+## Usage
 
-1. Open your GitHub profile [Settings](https://github.com/settings/profile).
-2. In the left navigation, select [Developer settings](https://github.com/settings/apps).
-3. In the left navigation, select OAuth apps.
-4. Select New OAuth App.
-    - If you haven't created an app before, you may see Register a new application instead. Select it.
-5. Enter an Application name, like n8n integration.
-6. Enter the Homepage URL for your app's website.
-7. If you'd like, add the optional Application description, which GitHub displays to end-users.
-8. From n8n, copy the OAuth Redirect URL and paste it into the GitHub Authorization callback URL.
-9. Select Register application.
-10. Copy the Client ID and Client Secret this generates and add them to your n8n credential.
+1. Add the “Tuoni” node to a workflow and select your “Tuoni API” credential.
+2. Choose a Resource, then an Operation (for example, Commands → Create).
+3. Fill in required parameters (for example, agent GUID, command type, arguments).
+4. Execute the workflow to interact with the Tuoni server.
 
-Refer to the [GitHub Authorizing OAuth apps documentation](https://docs.github.com/en/apps/oauth-apps/using-oauth-apps/authorizing-oauth-apps) for more information on the authorization process.
+Example scenarios:
+- Orchestrate command execution across active agents and monitor results.
+- Start a listener and generate a payload template, then download artifacts.
+- Collect discovered hosts/services and bulk-archive resolved findings.
+- Automate user administration and settings changes across environments.
 
 ## Compatibility
 
-Compatible with n8n@1.60.0 or later
+Tested with n8n 1.60.0 and later. Community nodes generally follow n8n’s minor version compatibility, but please pin versions as needed in your environment.
 
 ## Resources
 
-* [n8n community nodes documentation](https://docs.n8n.io/integrations/#community-nodes)
-* [GitHub API docs](https://docs.github.com/en/rest/issues)
+- n8n community nodes documentation: https://docs.n8n.io/integrations/#community-nodes
+- Tuoni server/API documentation: refer to your Tuoni deployment’s documentation or API reference.
