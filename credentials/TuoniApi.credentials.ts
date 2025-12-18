@@ -55,10 +55,17 @@ export class TuoniApi implements ICredentialType {
 			type: 'options',
 			default: 'jwt',
 			options: [
-				//{ name: 'JWT (Login then Bearer)', value: 'jwt' },
+				{ name: 'JWT (Login then Bearer)', value: 'jwt' },
 				{ name: 'Basic (Username/Password)', value: 'basic' },
 			],
 			description: 'Choose how to authenticate of API requests',
+		},
+		{
+			displayName: 'Token',
+			name: 'token',
+			type: 'hidden',
+			default: '',
+			description: 'JWT token (automatically populated)',
 		},
 	];
 
@@ -84,9 +91,10 @@ export class TuoniApi implements ICredentialType {
 				json: false,
 				skipSslCertificateValidation: Boolean(credentials.ignoreSSL),
 			})) as string;
-			return { token };
+			// Return all credentials with token merged
+			return { ...credentials, token };
 		}
-		return {};
+		return credentials;
 	};
 
 	authenticate: IAuthenticate = async (
@@ -96,6 +104,7 @@ export class TuoniApi implements ICredentialType {
 		const next: typeof requestOptions = { ...requestOptions };
 		next.headers = { ...(next.headers ?? {}) };
 		next.skipSslCertificateValidation = Boolean(credentials.ignoreSSL);
+		
 		if (credentials.authMode === 'basic') {
 			next.auth = {
 				username: String(credentials.username ?? ''),
@@ -104,8 +113,45 @@ export class TuoniApi implements ICredentialType {
 			};
 			delete (next.headers as Record<string, string>)['Authorization'];
 		} else {
-			const token = String(credentials.token ?? '');
-			(next.headers as Record<string, string>).Authorization = token ? `Bearer ${token}` : '';
+			// JWT mode
+			const url = next.url || '';
+			const isLoginRequest = url.includes('/auth/login');
+			
+			if (isLoginRequest) {
+				// Login request - keep Basic auth
+				if (!next.auth) {
+					next.auth = {
+						username: String(credentials.username ?? ''),
+						password: String(credentials.password ?? ''),
+						sendImmediately: true,
+					};
+				}
+			} else {
+				// Regular request - use Bearer token, fetch if missing
+				let token = String(credentials.token ?? '');
+				
+				if (!token) {
+					// Token missing - fetch it now
+					const axios = require('axios');
+					const response = await axios.post(
+						`${credentials.serverUrl}/api/v1/auth/login`,
+						{},
+						{
+							auth: {
+								username: String(credentials.username ?? ''),
+								password: String(credentials.password ?? ''),
+							},
+							headers: { Accept: 'text/plain' },
+							httpsAgent: credentials.ignoreSSL ? new (require('https').Agent)({ rejectUnauthorized: false }) : undefined,
+						}
+					);
+					token = response.data;
+					credentials.token = token;
+				}
+				
+				(next.headers as Record<string, string>).Authorization = `Bearer ${token}`;
+				delete next.auth;
+			}
 		}
 		return next;
 	};
@@ -114,15 +160,15 @@ export class TuoniApi implements ICredentialType {
 		request: {
 			baseURL: '={{$credentials?.serverUrl}}',
 			url: '={{$credentials.authMode === "basic" ? "/api/v1/agents" : "/api/v1/auth/login"}}',
-			method: 'GET',
+			method: '={{$credentials.authMode === "basic" ? "GET" : "POST"}}' as any,
 			auth: {
 				username: '={{$credentials?.username}}',
 				password: '={{$credentials?.password}}',
 			},
 			headers: {
-				Accept: 'application/json',
+				Accept: '={{$credentials.authMode === "basic" ? "application/json" : "text/plain"}}',
 			},
-			json: true,
+			json: '={{$credentials.authMode === "basic"}}' as any,
 			skipSslCertificateValidation: '={{$credentials?.ignoreSSL}}',
 		},
 	};

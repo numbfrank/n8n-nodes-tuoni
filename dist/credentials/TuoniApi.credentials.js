@@ -44,9 +44,17 @@ class TuoniApi {
                 type: 'options',
                 default: 'jwt',
                 options: [
+                    { name: 'JWT (Login then Bearer)', value: 'jwt' },
                     { name: 'Basic (Username/Password)', value: 'basic' },
                 ],
                 description: 'Choose how to authenticate of API requests',
+            },
+            {
+                displayName: 'Token',
+                name: 'token',
+                type: 'hidden',
+                default: '',
+                description: 'JWT token (automatically populated)',
             },
         ];
         this.genericAuth = true;
@@ -67,12 +75,12 @@ class TuoniApi {
                     json: false,
                     skipSslCertificateValidation: Boolean(credentials.ignoreSSL),
                 }));
-                return { token };
+                return { ...credentials, token };
             }
-            return {};
+            return credentials;
         };
         this.authenticate = async (credentials, requestOptions) => {
-            var _a, _b, _c, _d;
+            var _a, _b, _c, _d, _e, _f, _g, _h;
             const next = { ...requestOptions };
             next.headers = { ...((_a = next.headers) !== null && _a !== void 0 ? _a : {}) };
             next.skipSslCertificateValidation = Boolean(credentials.ignoreSSL);
@@ -85,8 +93,35 @@ class TuoniApi {
                 delete next.headers['Authorization'];
             }
             else {
-                const token = String((_d = credentials.token) !== null && _d !== void 0 ? _d : '');
-                next.headers.Authorization = token ? `Bearer ${token}` : '';
+                const url = next.url || '';
+                const isLoginRequest = url.includes('/auth/login');
+                if (isLoginRequest) {
+                    if (!next.auth) {
+                        next.auth = {
+                            username: String((_d = credentials.username) !== null && _d !== void 0 ? _d : ''),
+                            password: String((_e = credentials.password) !== null && _e !== void 0 ? _e : ''),
+                            sendImmediately: true,
+                        };
+                    }
+                }
+                else {
+                    let token = String((_f = credentials.token) !== null && _f !== void 0 ? _f : '');
+                    if (!token) {
+                        const axios = require('axios');
+                        const response = await axios.post(`${credentials.serverUrl}/api/v1/auth/login`, {}, {
+                            auth: {
+                                username: String((_g = credentials.username) !== null && _g !== void 0 ? _g : ''),
+                                password: String((_h = credentials.password) !== null && _h !== void 0 ? _h : ''),
+                            },
+                            headers: { Accept: 'text/plain' },
+                            httpsAgent: credentials.ignoreSSL ? new (require('https').Agent)({ rejectUnauthorized: false }) : undefined,
+                        });
+                        token = response.data;
+                        credentials.token = token;
+                    }
+                    next.headers.Authorization = `Bearer ${token}`;
+                    delete next.auth;
+                }
             }
             return next;
         };
@@ -94,15 +129,15 @@ class TuoniApi {
             request: {
                 baseURL: '={{$credentials?.serverUrl}}',
                 url: '={{$credentials.authMode === "basic" ? "/api/v1/agents" : "/api/v1/auth/login"}}',
-                method: 'GET',
+                method: '={{$credentials.authMode === "basic" ? "GET" : "POST"}}',
                 auth: {
                     username: '={{$credentials?.username}}',
                     password: '={{$credentials?.password}}',
                 },
                 headers: {
-                    Accept: 'application/json',
+                    Accept: '={{$credentials.authMode === "basic" ? "application/json" : "text/plain"}}',
                 },
-                json: true,
+                json: '={{$credentials.authMode === "basic"}}',
                 skipSslCertificateValidation: '={{$credentials?.ignoreSSL}}',
             },
         };
