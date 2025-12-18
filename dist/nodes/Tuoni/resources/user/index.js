@@ -14,13 +14,37 @@ exports.userDescription = [
         },
         options: [
             {
-                name: 'Get All',
-                value: 'getAll',
-                action: 'Get all users',
-                description: 'Get all users',
+                name: 'Change Own Password',
+                value: 'changeOwnPassword',
+                action: 'Change own password',
+                description: 'Change current user password',
                 routing: {
                     request: {
-                        method: 'GET',
+                        method: 'PUT',
+                        url: '/api/v1/users/me/password',
+                    },
+                },
+            },
+            {
+                name: 'Change Password',
+                value: 'changePassword',
+                action: 'Change user password',
+                description: 'Change user password by username',
+                routing: {
+                    request: {
+                        method: 'PUT',
+                        url: '=/api/v1/users/{{$parameter.username}}/password',
+                    },
+                },
+            },
+            {
+                name: 'Create',
+                value: 'create',
+                action: 'Create a user',
+                description: 'Create a new user',
+                routing: {
+                    request: {
+                        method: 'POST',
                         url: '/api/v1/users',
                     },
                 },
@@ -50,13 +74,13 @@ exports.userDescription = [
                 },
             },
             {
-                name: 'Create',
-                value: 'create',
-                action: 'Create a user',
-                description: 'Create a new user',
+                name: 'Get Many',
+                value: 'getAll',
+                action: 'Get many users',
+                description: 'Get many users',
                 routing: {
                     request: {
-                        method: 'POST',
+                        method: 'GET',
                         url: '/api/v1/users',
                     },
                 },
@@ -70,30 +94,6 @@ exports.userDescription = [
                     request: {
                         method: 'PUT',
                         url: '=/api/v1/users/{{$parameter.username}}',
-                    },
-                },
-            },
-            {
-                name: 'Change Password',
-                value: 'changePassword',
-                action: 'Change user password',
-                description: 'Change user password by username',
-                routing: {
-                    request: {
-                        method: 'PUT',
-                        url: '=/api/v1/users/{{$parameter.username}}/password',
-                    },
-                },
-            },
-            {
-                name: 'Change Own Password',
-                value: 'changeOwnPassword',
-                action: 'Change own password',
-                description: 'Change current user password',
-                routing: {
-                    request: {
-                        method: 'PUT',
-                        url: '/api/v1/users/me/password',
                     },
                 },
             },
@@ -112,7 +112,6 @@ exports.userDescription = [
         },
         default: '',
         required: true,
-        description: 'The username',
     },
     {
         displayName: 'User Data',
@@ -125,7 +124,6 @@ exports.userDescription = [
             },
         },
         default: '{}',
-        description: 'User data',
         routing: {
             send: {
                 type: 'body',

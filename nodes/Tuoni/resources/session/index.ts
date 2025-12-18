@@ -13,10 +13,10 @@ export const commandTemplateDescription: INodeProperties[] = [
 		},
 		options: [
 			{
-				name: 'Get All',
+				name: 'Get Many',
 				value: 'getAll',
-				action: 'Get all command templates',
-				description: 'Get all command templates',
+				action: 'Get many command templates',
+				description: 'Get many command templates',
 				routing: {
 					request: {
 						method: 'GET',

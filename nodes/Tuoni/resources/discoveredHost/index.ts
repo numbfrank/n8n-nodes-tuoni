@@ -1,5 +1,4 @@
 import type { INodeProperties } from 'n8n-workflow';
-
 export const discoveredHostDescription: INodeProperties[] = [
 	{
 		displayName: 'Operation',
@@ -13,13 +12,25 @@ export const discoveredHostDescription: INodeProperties[] = [
 		},
 		options: [
 			{
-				name: 'Get Many',
-				value: 'getAll',
-				action: 'Get hosts',
-				description: 'Get hosts by pagination and search criteria',
+				name: 'Archive Many',
+				value: 'archiveMany',
+				action: 'Archive hosts',
+				description: 'Archive hosts',
 				routing: {
 					request: {
-						method: 'GET',
+						method: 'POST',
+						url: '/api/v1/discovery/hosts/bulk-archive',
+					},
+				},
+			},
+			{
+				name: 'Create',
+				value: 'create',
+				action: 'Create a host',
+				description: 'Create a new host',
+				routing: {
+					request: {
+						method: 'POST',
 						url: '/api/v1/discovery/hosts',
 					},
 				},
@@ -37,30 +48,6 @@ export const discoveredHostDescription: INodeProperties[] = [
 				},
 			},
 			{
-				name: 'Create',
-				value: 'create',
-				action: 'Create a host',
-				description: 'Create a new host',
-				routing: {
-					request: {
-						method: 'POST',
-						url: '/api/v1/discovery/hosts',
-					},
-				},
-			},
-			{
-				name: 'Update',
-				value: 'update',
-				action: 'Update a host',
-				description: 'Edit host note or name',
-				routing: {
-					request: {
-						method: 'PATCH',
-						url: '=/api/v1/discovery/host/{{$parameter.hostId}}',
-					},
-				},
-			},
-			{
 				name: 'Get Events',
 				value: 'getEvents',
 				action: 'Get host events',
@@ -73,14 +60,14 @@ export const discoveredHostDescription: INodeProperties[] = [
 				},
 			},
 			{
-				name: 'Archive Many',
-				value: 'archiveMany',
-				action: 'Archive hosts',
-				description: 'Archive hosts',
+				name: 'Get Many',
+				value: 'getAll',
+				action: 'Get hosts',
+				description: 'Get hosts by pagination and search criteria',
 				routing: {
 					request: {
-						method: 'POST',
-						url: '/api/v1/discovery/hosts/bulk-archive',
+						method: 'GET',
+						url: '/api/v1/discovery/hosts',
 					},
 				},
 			},
@@ -93,6 +80,18 @@ export const discoveredHostDescription: INodeProperties[] = [
 					request: {
 						method: 'POST',
 						url: '/api/v1/discovery/hosts/bulk-restore',
+					},
+				},
+			},
+			{
+				name: 'Update',
+				value: 'update',
+				action: 'Update a host',
+				description: 'Edit host note or name',
+				routing: {
+					request: {
+						method: 'PATCH',
+						url: '=/api/v1/discovery/host/{{$parameter.hostId}}',
 					},
 				},
 			},
@@ -124,7 +123,6 @@ export const discoveredHostDescription: INodeProperties[] = [
 			},
 		},
 		default: '{}',
-		description: 'Host data',
 		routing: {
 			send: {
 				type: 'body',

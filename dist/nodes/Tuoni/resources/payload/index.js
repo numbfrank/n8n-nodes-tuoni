@@ -14,30 +14,6 @@ exports.payloadDescription = [
         },
         options: [
             {
-                name: 'Get All',
-                value: 'getAll',
-                action: 'Get all payloads',
-                description: 'Get all payloads',
-                routing: {
-                    request: {
-                        method: 'GET',
-                        url: '/api/v1/payloads',
-                    },
-                },
-            },
-            {
-                name: 'Get',
-                value: 'get',
-                action: 'Get a payload',
-                description: 'Get payload by ID',
-                routing: {
-                    request: {
-                        method: 'GET',
-                        url: '=/api/v1/payloads/{{$parameter.payloadId}}',
-                    },
-                },
-            },
-            {
                 name: 'Create',
                 value: 'create',
                 action: 'Create a payload',
@@ -73,6 +49,30 @@ exports.payloadDescription = [
                     },
                 },
             },
+            {
+                name: 'Get',
+                value: 'get',
+                action: 'Get a payload',
+                description: 'Get payload by ID',
+                routing: {
+                    request: {
+                        method: 'GET',
+                        url: '=/api/v1/payloads/{{$parameter.payloadId}}',
+                    },
+                },
+            },
+            {
+                name: 'Get Many',
+                value: 'getAll',
+                action: 'Get many payloads',
+                description: 'Get many payloads',
+                routing: {
+                    request: {
+                        method: 'GET',
+                        url: '/api/v1/payloads',
+                    },
+                },
+            },
         ],
         default: 'getAll',
     },
@@ -101,7 +101,6 @@ exports.payloadDescription = [
             },
         },
         default: '{}',
-        description: 'Payload data',
         routing: {
             send: {
                 type: 'body',
@@ -122,10 +121,10 @@ exports.payloadTemplateDescription = [
         },
         options: [
             {
-                name: 'Get All',
+                name: 'Get Many',
                 value: 'getAll',
-                action: 'Get all payload templates',
-                description: 'Get all payload templates',
+                action: 'Get many payload templates',
+                description: 'Get many payload templates',
                 routing: {
                     request: {
                         method: 'GET',

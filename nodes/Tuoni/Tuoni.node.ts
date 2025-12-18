@@ -1,21 +1,21 @@
 import { NodeConnectionTypes, type INodeType, type INodeTypeDescription } from 'n8n-workflow';
 import { agentDescription } from './resources/agent';
+import { commandAliasDescription } from './resources/commandAlias';
 import { commandDescription } from './resources/command';
 import { commandTemplateDescription } from './resources/session';
-import { commandAliasDescription } from './resources/commandAlias';
 import { discoveredCredentialDescription } from './resources/discoveredCredential';
 import { discoveredHostDescription } from './resources/discoveredHost';
 import { discoveredServiceDescription } from './resources/discoveredService';
-import { listenerDescription } from './resources/listener';
-import { payloadDescription, payloadTemplateDescription } from './resources/payload';
-import { jobDescription } from './resources/job';
-import { userDescription } from './resources/user';
 import { eventDescription } from './resources/event';
 import { fileStorageDescription } from './resources/fileStorage';
-import { settingDescription } from './resources/setting';
-import { scriptDescription } from './resources/script';
-import { pluginDescription } from './resources/plugin';
 import { ipDescription } from './resources/ip';
+import { jobDescription } from './resources/job';
+import { listenerDescription } from './resources/listener';
+import { payloadDescription, payloadTemplateDescription } from './resources/payload';
+import { pluginDescription } from './resources/plugin';
+import { scriptDescription } from './resources/script';
+import { settingDescription } from './resources/setting';
+import { userDescription } from './resources/user';
 
 export class Tuoni implements INodeType {
 	description: INodeTypeDescription = {
@@ -89,6 +89,10 @@ export class Tuoni implements INodeType {
 						value: 'fileStorage',
 					},
 					{
+						name: 'IP',
+						value: 'ip',
+					},
+					{
 						name: 'Job',
 						value: 'job',
 					},
@@ -107,10 +111,6 @@ export class Tuoni implements INodeType {
 					{
 						name: 'Plugin',
 						value: 'plugin',
-					},
-					{
-						name: 'IP',
-						value: 'ip',
 					},
 					{
 						name: 'Script',

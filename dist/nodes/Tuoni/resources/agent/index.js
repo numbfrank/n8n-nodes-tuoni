@@ -14,14 +14,14 @@ exports.agentDescription = [
         },
         options: [
             {
-                name: 'Get All',
-                value: 'getAll',
-                action: 'Get all agents',
-                description: 'Find all agents, both active and inactive',
+                name: 'Get',
+                value: 'get',
+                action: 'Get an agent',
+                description: 'Find agent by GUID',
                 routing: {
                     request: {
                         method: 'GET',
-                        url: '/api/v1/agents',
+                        url: '=/api/v1/agents/{{$parameter.guid}}',
                     },
                 },
             },
@@ -50,14 +50,14 @@ exports.agentDescription = [
                 },
             },
             {
-                name: 'Get',
-                value: 'get',
-                action: 'Get an agent',
-                description: 'Find agent by GUID',
+                name: 'Get Many',
+                value: 'getAll',
+                action: 'Get many agents',
+                description: 'Find many agents, both active and inactive',
                 routing: {
                     request: {
                         method: 'GET',
-                        url: '=/api/v1/agents/{{$parameter.guid}}',
+                        url: '/api/v1/agents',
                     },
                 },
             },

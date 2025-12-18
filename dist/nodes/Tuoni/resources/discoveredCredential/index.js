@@ -14,13 +14,25 @@ exports.discoveredCredentialDescription = [
         },
         options: [
             {
-                name: 'Get Many',
-                value: 'getAll',
-                action: 'Get credentials',
-                description: 'Get credentials by pagination and search criteria',
+                name: 'Archive Many',
+                value: 'archiveMany',
+                action: 'Archive credentials',
+                description: 'Archive credentials',
                 routing: {
                     request: {
-                        method: 'GET',
+                        method: 'POST',
+                        url: '/api/v1/discovery/credentials/bulk-archive',
+                    },
+                },
+            },
+            {
+                name: 'Create',
+                value: 'create',
+                action: 'Create a credential',
+                description: 'Create a new credential',
+                routing: {
+                    request: {
+                        method: 'POST',
                         url: '/api/v1/discovery/credentials',
                     },
                 },
@@ -38,30 +50,6 @@ exports.discoveredCredentialDescription = [
                 },
             },
             {
-                name: 'Create',
-                value: 'create',
-                action: 'Create a credential',
-                description: 'Create a new credential',
-                routing: {
-                    request: {
-                        method: 'POST',
-                        url: '/api/v1/discovery/credentials',
-                    },
-                },
-            },
-            {
-                name: 'Update',
-                value: 'update',
-                action: 'Update a credential',
-                description: 'Update credential',
-                routing: {
-                    request: {
-                        method: 'PATCH',
-                        url: '=/api/v1/discovery/credential/{{$parameter.credentialId}}',
-                    },
-                },
-            },
-            {
                 name: 'Get Events',
                 value: 'getEvents',
                 action: 'Get credential events',
@@ -74,14 +62,14 @@ exports.discoveredCredentialDescription = [
                 },
             },
             {
-                name: 'Archive Many',
-                value: 'archiveMany',
-                action: 'Archive credentials',
-                description: 'Archive credentials',
+                name: 'Get Many',
+                value: 'getAll',
+                action: 'Get credentials',
+                description: 'Get credentials by pagination and search criteria',
                 routing: {
                     request: {
-                        method: 'POST',
-                        url: '/api/v1/discovery/credentials/bulk-archive',
+                        method: 'GET',
+                        url: '/api/v1/discovery/credentials',
                     },
                 },
             },
@@ -94,6 +82,18 @@ exports.discoveredCredentialDescription = [
                     request: {
                         method: 'POST',
                         url: '/api/v1/discovery/credentials/bulk-restore',
+                    },
+                },
+            },
+            {
+                name: 'Update',
+                value: 'update',
+                action: 'Update a credential',
+                description: 'Update credential',
+                routing: {
+                    request: {
+                        method: 'PATCH',
+                        url: '=/api/v1/discovery/credential/{{$parameter.credentialId}}',
                     },
                 },
             },
@@ -125,7 +125,6 @@ exports.discoveredCredentialDescription = [
             },
         },
         default: '{}',
-        description: 'Credential data',
         routing: {
             send: {
                 type: 'body',

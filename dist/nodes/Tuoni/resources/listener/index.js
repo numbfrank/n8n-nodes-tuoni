@@ -14,14 +14,26 @@ exports.listenerDescription = [
         },
         options: [
             {
-                name: 'Get All',
-                value: 'getAll',
-                action: 'Get all listeners',
-                description: 'Get all listeners',
+                name: 'Create',
+                value: 'create',
+                action: 'Create a listener',
+                description: 'Create a new listener',
                 routing: {
                     request: {
-                        method: 'GET',
+                        method: 'POST',
                         url: '/api/v1/listeners',
+                    },
+                },
+            },
+            {
+                name: 'Delete',
+                value: 'delete',
+                action: 'Delete a listener',
+                description: 'Delete a listener by ID',
+                routing: {
+                    request: {
+                        method: 'DELETE',
+                        url: '=/api/v1/listeners/{{$parameter.listenerId}}',
                     },
                 },
             },
@@ -38,38 +50,14 @@ exports.listenerDescription = [
                 },
             },
             {
-                name: 'Create',
-                value: 'create',
-                action: 'Create a listener',
-                description: 'Create a new listener',
+                name: 'Get Many',
+                value: 'getAll',
+                action: 'Get many listeners',
+                description: 'Get many listeners',
                 routing: {
                     request: {
-                        method: 'POST',
+                        method: 'GET',
                         url: '/api/v1/listeners',
-                    },
-                },
-            },
-            {
-                name: 'Update',
-                value: 'update',
-                action: 'Update a listener',
-                description: 'Edit listener, allows changing name and configuration',
-                routing: {
-                    request: {
-                        method: 'PATCH',
-                        url: '=/api/v1/listeners/{{$parameter.listenerId}}',
-                    },
-                },
-            },
-            {
-                name: 'Delete',
-                value: 'delete',
-                action: 'Delete a listener',
-                description: 'Delete a listener by ID',
-                routing: {
-                    request: {
-                        method: 'DELETE',
-                        url: '=/api/v1/listeners/{{$parameter.listenerId}}',
                     },
                 },
             },
@@ -94,6 +82,18 @@ exports.listenerDescription = [
                     request: {
                         method: 'PUT',
                         url: '=/api/v1/listeners/{{$parameter.listenerId}}/stop',
+                    },
+                },
+            },
+            {
+                name: 'Update',
+                value: 'update',
+                action: 'Update a listener',
+                description: 'Edit listener, allows changing name and configuration',
+                routing: {
+                    request: {
+                        method: 'PATCH',
+                        url: '=/api/v1/listeners/{{$parameter.listenerId}}',
                     },
                 },
             },

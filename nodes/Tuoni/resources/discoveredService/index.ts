@@ -1,5 +1,4 @@
 import type { INodeProperties } from 'n8n-workflow';
-
 export const discoveredServiceDescription: INodeProperties[] = [
 	{
 		displayName: 'Operation',
@@ -13,13 +12,25 @@ export const discoveredServiceDescription: INodeProperties[] = [
 		},
 		options: [
 			{
-				name: 'Get Many',
-				value: 'getAll',
-				action: 'Get services',
-				description: 'Get services by pagination and search criteria',
+				name: 'Archive Many',
+				value: 'archiveMany',
+				action: 'Archive services',
+				description: 'Archive services',
 				routing: {
 					request: {
-						method: 'GET',
+						method: 'POST',
+						url: '/api/v1/discovery/services/bulk-archive',
+					},
+				},
+			},
+			{
+				name: 'Create',
+				value: 'create',
+				action: 'Create a service',
+				description: 'Create a new service',
+				routing: {
+					request: {
+						method: 'POST',
 						url: '/api/v1/discovery/services',
 					},
 				},
@@ -37,30 +48,6 @@ export const discoveredServiceDescription: INodeProperties[] = [
 				},
 			},
 			{
-				name: 'Create',
-				value: 'create',
-				action: 'Create a service',
-				description: 'Create a new service',
-				routing: {
-					request: {
-						method: 'POST',
-						url: '/api/v1/discovery/services',
-					},
-				},
-			},
-			{
-				name: 'Update',
-				value: 'update',
-				action: 'Update a service',
-				description: 'Edit service note, banner or protocol',
-				routing: {
-					request: {
-						method: 'PATCH',
-						url: '=/api/v1/discovery/service/{{$parameter.serviceId}}',
-					},
-				},
-			},
-			{
 				name: 'Get Events',
 				value: 'getEvents',
 				action: 'Get service events',
@@ -73,14 +60,14 @@ export const discoveredServiceDescription: INodeProperties[] = [
 				},
 			},
 			{
-				name: 'Archive Many',
-				value: 'archiveMany',
-				action: 'Archive services',
-				description: 'Archive services',
+				name: 'Get Many',
+				value: 'getAll',
+				action: 'Get services',
+				description: 'Get services by pagination and search criteria',
 				routing: {
 					request: {
-						method: 'POST',
-						url: '/api/v1/discovery/services/bulk-archive',
+						method: 'GET',
+						url: '/api/v1/discovery/services',
 					},
 				},
 			},
@@ -93,6 +80,18 @@ export const discoveredServiceDescription: INodeProperties[] = [
 					request: {
 						method: 'POST',
 						url: '/api/v1/discovery/services/bulk-restore',
+					},
+				},
+			},
+			{
+				name: 'Update',
+				value: 'update',
+				action: 'Update a service',
+				description: 'Edit service note, banner or protocol',
+				routing: {
+					request: {
+						method: 'PATCH',
+						url: '=/api/v1/discovery/service/{{$parameter.serviceId}}',
 					},
 				},
 			},
@@ -124,7 +123,6 @@ export const discoveredServiceDescription: INodeProperties[] = [
 			},
 		},
 		default: '{}',
-		description: 'Service data',
 		routing: {
 			send: {
 				type: 'body',

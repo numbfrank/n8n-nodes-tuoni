@@ -13,10 +13,10 @@ export const settingDescription: INodeProperties[] = [
 		},
 		options: [
 			{
-				name: 'Get All',
+				name: 'Get Many',
 				value: 'getAll',
-				action: 'Get all settings',
-				description: 'Get all Tuoni settings',
+				action: 'Get many settings',
+				description: 'Get many Tuoni settings',
 				routing: {
 					request: {
 						method: 'GET',

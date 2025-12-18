@@ -14,14 +14,14 @@ exports.scriptDescription = [
         },
         options: [
             {
-                name: 'Get All',
-                value: 'getAll',
-                action: 'Get all scripts',
-                description: 'Get all scripts',
+                name: 'Get Content',
+                value: 'getContent',
+                action: 'Get script content',
+                description: 'Get current content of a script',
                 routing: {
                     request: {
                         method: 'GET',
-                        url: '/api/v1/scripts',
+                        url: '=/api/v1/scripts/content/{{$parameter.scriptPath}}',
                     },
                 },
             },
@@ -38,14 +38,14 @@ exports.scriptDescription = [
                 },
             },
             {
-                name: 'Get Content',
-                value: 'getContent',
-                action: 'Get script content',
-                description: 'Get current content of a script',
+                name: 'Get Log Lines',
+                value: 'getLogLines',
+                action: 'Get log lines',
+                description: 'Get specific lines from a script log file',
                 routing: {
                     request: {
                         method: 'GET',
-                        url: '=/api/v1/scripts/content/{{$parameter.scriptPath}}',
+                        url: '=/api/v1/scripts/log/lines/{{$parameter.scriptPath}}',
                     },
                 },
             },
@@ -62,14 +62,14 @@ exports.scriptDescription = [
                 },
             },
             {
-                name: 'Get Log Lines',
-                value: 'getLogLines',
-                action: 'Get log lines',
-                description: 'Get specific lines from a script log file',
+                name: 'Get Many',
+                value: 'getAll',
+                action: 'Get many scripts',
+                description: 'Get many scripts',
                 routing: {
                     request: {
                         method: 'GET',
-                        url: '=/api/v1/scripts/log/lines/{{$parameter.scriptPath}}',
+                        url: '/api/v1/scripts',
                     },
                 },
             },

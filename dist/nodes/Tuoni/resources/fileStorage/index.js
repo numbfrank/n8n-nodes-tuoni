@@ -14,14 +14,26 @@ exports.fileStorageDescription = [
         },
         options: [
             {
-                name: 'Get All',
-                value: 'getAll',
-                action: 'Get all files',
-                description: 'Get all files',
+                name: 'Delete',
+                value: 'delete',
+                action: 'Delete a file',
+                description: 'Delete file by ID',
+                routing: {
+                    request: {
+                        method: 'DELETE',
+                        url: '=/api/v1/file/{{$parameter.fileId}}',
+                    },
+                },
+            },
+            {
+                name: 'Download',
+                value: 'download',
+                action: 'Download a file',
+                description: 'Download file by ID',
                 routing: {
                     request: {
                         method: 'GET',
-                        url: '/api/v1/files',
+                        url: '=/api/v1/file/{{$parameter.fileId}}/download',
                     },
                 },
             },
@@ -50,25 +62,13 @@ exports.fileStorageDescription = [
                 },
             },
             {
-                name: 'Download',
-                value: 'download',
-                action: 'Download a file',
-                description: 'Download file by ID',
+                name: 'Get Many',
+                value: 'getAll',
+                action: 'Get many files',
+                description: 'Get many files',
                 routing: {
                     request: {
                         method: 'GET',
-                        url: '=/api/v1/file/{{$parameter.fileId}}/download',
-                    },
-                },
-            },
-            {
-                name: 'Upload',
-                value: 'upload',
-                action: 'Upload a file',
-                description: 'Upload file',
-                routing: {
-                    request: {
-                        method: 'POST',
                         url: '/api/v1/files',
                     },
                 },
@@ -86,14 +86,14 @@ exports.fileStorageDescription = [
                 },
             },
             {
-                name: 'Delete',
-                value: 'delete',
-                action: 'Delete a file',
-                description: 'Delete file by ID',
+                name: 'Upload',
+                value: 'upload',
+                action: 'Upload a file',
+                description: 'Upload file',
                 routing: {
                     request: {
-                        method: 'DELETE',
-                        url: '=/api/v1/file/{{$parameter.fileId}}',
+                        method: 'POST',
+                        url: '/api/v1/files',
                     },
                 },
             },
@@ -139,7 +139,6 @@ exports.fileStorageDescription = [
             },
         },
         default: '{}',
-        description: 'File data',
         routing: {
             send: {
                 type: 'body',

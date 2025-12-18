@@ -14,14 +14,14 @@ exports.jobDescription = [
         },
         options: [
             {
-                name: 'Get All',
-                value: 'getAll',
-                action: 'Get all jobs',
-                description: 'Get all jobs',
+                name: 'Get',
+                value: 'get',
+                action: 'Get a job',
+                description: 'Get job by ID',
                 routing: {
                     request: {
                         method: 'GET',
-                        url: '/api/v1/jobs/all',
+                        url: '=/api/v1/job/{{$parameter.jobId}}',
                     },
                 },
             },
@@ -38,14 +38,14 @@ exports.jobDescription = [
                 },
             },
             {
-                name: 'Get',
-                value: 'get',
-                action: 'Get a job',
-                description: 'Get job by ID',
+                name: 'Get Many',
+                value: 'getAll',
+                action: 'Get many jobs',
+                description: 'Get many jobs',
                 routing: {
                     request: {
                         method: 'GET',
-                        url: '=/api/v1/job/{{$parameter.jobId}}',
+                        url: '/api/v1/jobs/all',
                     },
                 },
             },
@@ -62,18 +62,6 @@ exports.jobDescription = [
                 },
             },
             {
-                name: 'Resume',
-                value: 'resume',
-                action: 'Resume a job',
-                description: 'Resume job by ID',
-                routing: {
-                    request: {
-                        method: 'POST',
-                        url: '=/api/v1/job/{{$parameter.jobId}}/resume',
-                    },
-                },
-            },
-            {
                 name: 'Restart',
                 value: 'restart',
                 action: 'Restart a job',
@@ -82,6 +70,18 @@ exports.jobDescription = [
                     request: {
                         method: 'POST',
                         url: '=/api/v1/job/{{$parameter.jobId}}/restart',
+                    },
+                },
+            },
+            {
+                name: 'Resume',
+                value: 'resume',
+                action: 'Resume a job',
+                description: 'Resume job by ID',
+                routing: {
+                    request: {
+                        method: 'POST',
+                        url: '=/api/v1/job/{{$parameter.jobId}}/resume',
                     },
                 },
             },

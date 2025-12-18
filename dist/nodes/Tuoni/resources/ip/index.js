@@ -14,10 +14,10 @@ exports.ipDescription = [
         },
         options: [
             {
-                name: 'Get All',
+                name: 'Get Many',
                 value: 'getAll',
-                action: 'Get all IPs',
-                description: 'Get all IPs',
+                action: 'Get many i ps',
+                description: 'Get many IPs',
                 routing: {
                     request: {
                         method: 'GET',

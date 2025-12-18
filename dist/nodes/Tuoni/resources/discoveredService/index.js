@@ -14,13 +14,25 @@ exports.discoveredServiceDescription = [
         },
         options: [
             {
-                name: 'Get Many',
-                value: 'getAll',
-                action: 'Get services',
-                description: 'Get services by pagination and search criteria',
+                name: 'Archive Many',
+                value: 'archiveMany',
+                action: 'Archive services',
+                description: 'Archive services',
                 routing: {
                     request: {
-                        method: 'GET',
+                        method: 'POST',
+                        url: '/api/v1/discovery/services/bulk-archive',
+                    },
+                },
+            },
+            {
+                name: 'Create',
+                value: 'create',
+                action: 'Create a service',
+                description: 'Create a new service',
+                routing: {
+                    request: {
+                        method: 'POST',
                         url: '/api/v1/discovery/services',
                     },
                 },
@@ -38,30 +50,6 @@ exports.discoveredServiceDescription = [
                 },
             },
             {
-                name: 'Create',
-                value: 'create',
-                action: 'Create a service',
-                description: 'Create a new service',
-                routing: {
-                    request: {
-                        method: 'POST',
-                        url: '/api/v1/discovery/services',
-                    },
-                },
-            },
-            {
-                name: 'Update',
-                value: 'update',
-                action: 'Update a service',
-                description: 'Edit service note, banner or protocol',
-                routing: {
-                    request: {
-                        method: 'PATCH',
-                        url: '=/api/v1/discovery/service/{{$parameter.serviceId}}',
-                    },
-                },
-            },
-            {
                 name: 'Get Events',
                 value: 'getEvents',
                 action: 'Get service events',
@@ -74,14 +62,14 @@ exports.discoveredServiceDescription = [
                 },
             },
             {
-                name: 'Archive Many',
-                value: 'archiveMany',
-                action: 'Archive services',
-                description: 'Archive services',
+                name: 'Get Many',
+                value: 'getAll',
+                action: 'Get services',
+                description: 'Get services by pagination and search criteria',
                 routing: {
                     request: {
-                        method: 'POST',
-                        url: '/api/v1/discovery/services/bulk-archive',
+                        method: 'GET',
+                        url: '/api/v1/discovery/services',
                     },
                 },
             },
@@ -94,6 +82,18 @@ exports.discoveredServiceDescription = [
                     request: {
                         method: 'POST',
                         url: '/api/v1/discovery/services/bulk-restore',
+                    },
+                },
+            },
+            {
+                name: 'Update',
+                value: 'update',
+                action: 'Update a service',
+                description: 'Edit service note, banner or protocol',
+                routing: {
+                    request: {
+                        method: 'PATCH',
+                        url: '=/api/v1/discovery/service/{{$parameter.serviceId}}',
                     },
                 },
             },
@@ -125,7 +125,6 @@ exports.discoveredServiceDescription = [
             },
         },
         default: '{}',
-        description: 'Service data',
         routing: {
             send: {
                 type: 'body',

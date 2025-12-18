@@ -14,14 +14,14 @@ exports.commandDescription = [
         },
         options: [
             {
-                name: 'Get All',
-                value: 'getAll',
-                action: 'Get all commands',
-                description: 'Get all commands',
+                name: 'Create',
+                value: 'create',
+                action: 'Create a command',
+                description: 'Create and queue new command for sending to agent',
                 routing: {
                     request: {
-                        method: 'GET',
-                        url: '/api/v1/commands',
+                        method: 'POST',
+                        url: '=/api/v1/agents/{{$parameter.guid}}/commands',
                     },
                 },
             },
@@ -38,14 +38,14 @@ exports.commandDescription = [
                 },
             },
             {
-                name: 'Create',
-                value: 'create',
-                action: 'Create a command',
-                description: 'Create and queue new command for sending to agent',
+                name: 'Get Many',
+                value: 'getAll',
+                action: 'Get many commands',
+                description: 'Get many commands',
                 routing: {
                     request: {
-                        method: 'POST',
-                        url: '=/api/v1/agents/{{$parameter.guid}}/commands',
+                        method: 'GET',
+                        url: '/api/v1/commands',
                     },
                 },
             },

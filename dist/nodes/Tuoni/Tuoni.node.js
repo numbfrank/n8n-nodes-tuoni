@@ -3,22 +3,22 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Tuoni = void 0;
 const n8n_workflow_1 = require("n8n-workflow");
 const agent_1 = require("./resources/agent");
+const commandAlias_1 = require("./resources/commandAlias");
 const command_1 = require("./resources/command");
 const session_1 = require("./resources/session");
-const commandAlias_1 = require("./resources/commandAlias");
 const discoveredCredential_1 = require("./resources/discoveredCredential");
 const discoveredHost_1 = require("./resources/discoveredHost");
 const discoveredService_1 = require("./resources/discoveredService");
-const listener_1 = require("./resources/listener");
-const payload_1 = require("./resources/payload");
-const job_1 = require("./resources/job");
-const user_1 = require("./resources/user");
 const event_1 = require("./resources/event");
 const fileStorage_1 = require("./resources/fileStorage");
-const setting_1 = require("./resources/setting");
-const script_1 = require("./resources/script");
-const plugin_1 = require("./resources/plugin");
 const ip_1 = require("./resources/ip");
+const job_1 = require("./resources/job");
+const listener_1 = require("./resources/listener");
+const payload_1 = require("./resources/payload");
+const plugin_1 = require("./resources/plugin");
+const script_1 = require("./resources/script");
+const setting_1 = require("./resources/setting");
+const user_1 = require("./resources/user");
 class Tuoni {
     constructor() {
         this.description = {
@@ -92,6 +92,10 @@ class Tuoni {
                             value: 'fileStorage',
                         },
                         {
+                            name: 'IP',
+                            value: 'ip',
+                        },
+                        {
                             name: 'Job',
                             value: 'job',
                         },
@@ -110,10 +114,6 @@ class Tuoni {
                         {
                             name: 'Plugin',
                             value: 'plugin',
-                        },
-                        {
-                            name: 'IP',
-                            value: 'ip',
                         },
                         {
                             name: 'Script',

@@ -40,10 +40,10 @@ exports.pluginDescription = [
         },
         options: [
             {
-                name: 'Get All',
+                name: 'Get Many',
                 value: 'getAll',
-                action: 'Get all plugins',
-                description: 'Get all plugins of specified type',
+                action: 'Get many plugins',
+                description: 'Get many plugins of specified type',
                 routing: {
                     request: {
                         method: 'GET',

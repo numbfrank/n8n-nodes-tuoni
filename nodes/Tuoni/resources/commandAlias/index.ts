@@ -1,5 +1,4 @@
 import type { INodeProperties } from 'n8n-workflow';
-
 export const commandAliasDescription: INodeProperties[] = [
 	{
 		displayName: 'Operation',
@@ -13,14 +12,26 @@ export const commandAliasDescription: INodeProperties[] = [
 		},
 		options: [
 			{
-				name: 'Get All',
-				value: 'getAll',
-				action: 'Get all command aliases',
-				description: 'Get all command aliases',
+				name: 'Create',
+				value: 'create',
+				action: 'Create a command alias',
+				description: 'Create a new command alias',
 				routing: {
 					request: {
-						method: 'GET',
+						method: 'POST',
 						url: '/api/v1/command-alias',
+					},
+				},
+			},
+			{
+				name: 'Delete',
+				value: 'delete',
+				action: 'Delete a command alias',
+				description: 'Archives a command alias by ID',
+				routing: {
+					request: {
+						method: 'DELETE',
+						url: '=/api/v1/command-alias/{{$parameter.aliasId}}',
 					},
 				},
 			},
@@ -37,13 +48,13 @@ export const commandAliasDescription: INodeProperties[] = [
 				},
 			},
 			{
-				name: 'Create',
-				value: 'create',
-				action: 'Create a command alias',
-				description: 'Create a new command alias',
+				name: 'Get Many',
+				value: 'getAll',
+				action: 'Get many command aliases',
+				description: 'Get many command aliases',
 				routing: {
 					request: {
-						method: 'POST',
+						method: 'GET',
 						url: '/api/v1/command-alias',
 					},
 				},
@@ -56,18 +67,6 @@ export const commandAliasDescription: INodeProperties[] = [
 				routing: {
 					request: {
 						method: 'PUT',
-						url: '=/api/v1/command-alias/{{$parameter.aliasId}}',
-					},
-				},
-			},
-			{
-				name: 'Delete',
-				value: 'delete',
-				action: 'Delete a command alias',
-				description: 'Archives a command alias by ID',
-				routing: {
-					request: {
-						method: 'DELETE',
 						url: '=/api/v1/command-alias/{{$parameter.aliasId}}',
 					},
 				},
