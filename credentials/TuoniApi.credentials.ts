@@ -1,8 +1,12 @@
+import { Buffer } from 'buffer';
 import type {
 	IAuthenticateGeneric,
 	Icon,
+	ICredentialDataDecryptedObject,
 	ICredentialTestRequest,
 	ICredentialType,
+	IDataObject,
+	IHttpRequestHelper,
 	INodeProperties,
 } from 'n8n-workflow';
 
@@ -39,13 +43,39 @@ export class TuoniApi implements ICredentialType {
 			default: '',
 			description: 'Password for Tuoni authentication',
 		},
+		{
+			displayName: 'Ignore SSL Issues',
+			name: 'ignoreSSL',
+			type: 'boolean',
+			default: false,
+			description: 'Ignore SSL certificate verification issues (for self-signed certificates)',
+		},
 	];
+
+	preAuthentication = async function (
+		this: IHttpRequestHelper,
+		credentials: ICredentialDataDecryptedObject,
+	): Promise<IDataObject> {
+		const token = (await this.helpers.httpRequest({
+			baseURL: credentials.serverUrl as string,
+			url: '/api/v1/auth/login',
+			method: 'POST',
+			headers: {
+				Authorization: `Basic ${Buffer.from(`${credentials.username}:${credentials.password}`).toString('base64')}`,
+				Accept: 'text/plain',
+			},
+			json: false,
+			skipSslCertificateValidation: Boolean(credentials.ignoreSSL),
+		})) as string;
+
+		return { token };
+	};
 
 	authenticate: IAuthenticateGeneric = {
 		type: 'generic',
 		properties: {
 			headers: {
-				Authorization: '={{$response.body.token ? "Bearer " + $response.body.token : ""}}',
+				Authorization: '={{$credentials.token ? "Bearer " + $credentials.token : ""}}',
 			},
 		},
 	};
@@ -53,8 +83,14 @@ export class TuoniApi implements ICredentialType {
 	test: ICredentialTestRequest = {
 		request: {
 			baseURL: '={{$credentials?.serverUrl}}',
-			url: '/api/v1/users/me',
-			method: 'GET',
+			url: '/api/v1/auth/login',
+			method: 'POST',
+			headers: {
+				Authorization: '={{"Basic " + Buffer.from($credentials?.username + ":" + $credentials?.password).toString("base64")}}',
+				Accept: 'text/plain',
+			},
+			json: false,
+			skipSslCertificateValidation: '={{$credentials?.ignoreSSL}}',
 		},
 	};
 }

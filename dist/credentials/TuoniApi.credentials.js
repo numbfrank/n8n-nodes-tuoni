@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.TuoniApi = void 0;
+const buffer_1 = require("buffer");
 class TuoniApi {
     constructor() {
         this.name = 'tuoniApi';
@@ -31,20 +32,47 @@ class TuoniApi {
                 default: '',
                 description: 'Password for Tuoni authentication',
             },
+            {
+                displayName: 'Ignore SSL Issues',
+                name: 'ignoreSSL',
+                type: 'boolean',
+                default: false,
+                description: 'Ignore SSL certificate verification issues (for self-signed certificates)',
+            },
         ];
+        this.preAuthentication = async function (credentials) {
+            const token = (await this.helpers.httpRequest({
+                baseURL: credentials.serverUrl,
+                url: '/api/v1/auth/login',
+                method: 'POST',
+                headers: {
+                    Authorization: `Basic ${buffer_1.Buffer.from(`${credentials.username}:${credentials.password}`).toString('base64')}`,
+                    Accept: 'text/plain',
+                },
+                json: false,
+                skipSslCertificateValidation: Boolean(credentials.ignoreSSL),
+            }));
+            return { token };
+        };
         this.authenticate = {
             type: 'generic',
             properties: {
                 headers: {
-                    Authorization: '={{$response.body.token ? "Bearer " + $response.body.token : ""}}',
+                    Authorization: '={{$credentials.token ? "Bearer " + $credentials.token : ""}}',
                 },
             },
         };
         this.test = {
             request: {
                 baseURL: '={{$credentials?.serverUrl}}',
-                url: '/api/v1/users/me',
-                method: 'GET',
+                url: '/api/v1/auth/login',
+                method: 'POST',
+                headers: {
+                    Authorization: '={{"Basic " + Buffer.from($credentials?.username + ":" + $credentials?.password).toString("base64")}}',
+                    Accept: 'text/plain',
+                },
+                json: false,
+                skipSslCertificateValidation: '={{$credentials?.ignoreSSL}}',
             },
         };
     }
