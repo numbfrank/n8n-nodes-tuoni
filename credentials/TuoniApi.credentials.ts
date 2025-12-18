@@ -1,4 +1,3 @@
-import { Buffer } from 'buffer';
 import type {
 	IAuthenticateGeneric,
 	Icon,
@@ -60,8 +59,11 @@ export class TuoniApi implements ICredentialType {
 			baseURL: credentials.serverUrl as string,
 			url: '/api/v1/auth/login',
 			method: 'POST',
+			auth: {
+				username: String(credentials.username ?? ''),
+				password: String(credentials.password ?? ''),
+			},
 			headers: {
-				Authorization: `Basic ${Buffer.from(`${credentials.username}:${credentials.password}`).toString('base64')}`,
 				Accept: 'text/plain',
 			},
 			json: false,
@@ -85,8 +87,11 @@ export class TuoniApi implements ICredentialType {
 			baseURL: '={{$credentials?.serverUrl}}',
 			url: '/api/v1/auth/login',
 			method: 'POST',
+			auth: {
+				username: '={{$credentials?.username}}',
+				password: '={{$credentials?.password}}',
+			},
 			headers: {
-				Authorization: '={{"Basic " + Buffer.from($credentials?.username + ":" + $credentials?.password).toString("base64")}}',
 				Accept: 'text/plain',
 			},
 			json: false,

@@ -1,7 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.TuoniApi = void 0;
-const buffer_1 = require("buffer");
 class TuoniApi {
     constructor() {
         this.name = 'tuoniApi';
@@ -41,12 +40,16 @@ class TuoniApi {
             },
         ];
         this.preAuthentication = async function (credentials) {
+            var _a, _b;
             const token = (await this.helpers.httpRequest({
                 baseURL: credentials.serverUrl,
                 url: '/api/v1/auth/login',
                 method: 'POST',
+                auth: {
+                    username: String((_a = credentials.username) !== null && _a !== void 0 ? _a : ''),
+                    password: String((_b = credentials.password) !== null && _b !== void 0 ? _b : ''),
+                },
                 headers: {
-                    Authorization: `Basic ${buffer_1.Buffer.from(`${credentials.username}:${credentials.password}`).toString('base64')}`,
                     Accept: 'text/plain',
                 },
                 json: false,
@@ -67,8 +70,11 @@ class TuoniApi {
                 baseURL: '={{$credentials?.serverUrl}}',
                 url: '/api/v1/auth/login',
                 method: 'POST',
+                auth: {
+                    username: '={{$credentials?.username}}',
+                    password: '={{$credentials?.password}}',
+                },
                 headers: {
-                    Authorization: '={{"Basic " + Buffer.from($credentials?.username + ":" + $credentials?.password).toString("base64")}}',
                     Accept: 'text/plain',
                 },
                 json: false,
