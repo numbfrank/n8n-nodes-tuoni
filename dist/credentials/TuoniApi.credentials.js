@@ -38,46 +38,71 @@ class TuoniApi {
                 default: false,
                 description: 'Ignore SSL certificate verification issues (for self-signed certificates)',
             },
+            {
+                displayName: 'Authentication Method',
+                name: 'authMode',
+                type: 'options',
+                default: 'jwt',
+                options: [
+                    { name: 'Basic (Username/Password)', value: 'basic' },
+                ],
+                description: 'Choose how to authenticate of API requests',
+            },
         ];
+        this.genericAuth = true;
         this.preAuthentication = async function (credentials) {
             var _a, _b;
-            const token = (await this.helpers.httpRequest({
-                baseURL: credentials.serverUrl,
-                url: '/api/v1/auth/login',
-                method: 'POST',
-                auth: {
-                    username: String((_a = credentials.username) !== null && _a !== void 0 ? _a : ''),
-                    password: String((_b = credentials.password) !== null && _b !== void 0 ? _b : ''),
-                },
-                headers: {
-                    Accept: 'text/plain',
-                },
-                json: false,
-                skipSslCertificateValidation: Boolean(credentials.ignoreSSL),
-            }));
-            return { token };
+            if (credentials.authMode === 'jwt') {
+                const token = (await this.helpers.httpRequest({
+                    baseURL: credentials.serverUrl,
+                    url: '/api/v1/auth/login',
+                    method: 'POST',
+                    auth: {
+                        username: String((_a = credentials.username) !== null && _a !== void 0 ? _a : ''),
+                        password: String((_b = credentials.password) !== null && _b !== void 0 ? _b : ''),
+                    },
+                    headers: {
+                        Accept: 'text/plain',
+                    },
+                    json: false,
+                    skipSslCertificateValidation: Boolean(credentials.ignoreSSL),
+                }));
+                return { token };
+            }
+            return {};
         };
-        this.authenticate = {
-            type: 'generic',
-            properties: {
-                headers: {
-                    Authorization: '={{$credentials.token ? "Bearer " + $credentials.token : ""}}',
-                },
-            },
+        this.authenticate = async (credentials, requestOptions) => {
+            var _a, _b, _c, _d;
+            const next = { ...requestOptions };
+            next.headers = { ...((_a = next.headers) !== null && _a !== void 0 ? _a : {}) };
+            next.skipSslCertificateValidation = Boolean(credentials.ignoreSSL);
+            if (credentials.authMode === 'basic') {
+                next.auth = {
+                    username: String((_b = credentials.username) !== null && _b !== void 0 ? _b : ''),
+                    password: String((_c = credentials.password) !== null && _c !== void 0 ? _c : ''),
+                    sendImmediately: true,
+                };
+                delete next.headers['Authorization'];
+            }
+            else {
+                const token = String((_d = credentials.token) !== null && _d !== void 0 ? _d : '');
+                next.headers.Authorization = token ? `Bearer ${token}` : '';
+            }
+            return next;
         };
         this.test = {
             request: {
                 baseURL: '={{$credentials?.serverUrl}}',
-                url: '/api/v1/auth/login',
-                method: 'POST',
+                url: '={{$credentials.authMode === "basic" ? "/api/v1/agents" : "/api/v1/auth/login"}}',
+                method: 'GET',
                 auth: {
                     username: '={{$credentials?.username}}',
                     password: '={{$credentials?.password}}',
                 },
                 headers: {
-                    Accept: 'text/plain',
+                    Accept: 'application/json',
                 },
-                json: false,
+                json: true,
                 skipSslCertificateValidation: '={{$credentials?.ignoreSSL}}',
             },
         };
