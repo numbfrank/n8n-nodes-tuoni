@@ -6,7 +6,7 @@ class TuoniApi {
         this.name = 'tuoniApi';
         this.displayName = 'Tuoni API';
         this.icon = { light: 'file:../icons/tuoni.svg', dark: 'file:../icons/tuoni.dark.svg' };
-        this.documentationUrl = 'https://github.com/tuoni/tuoni';
+        this.documentationUrl = 'https://docs.shelldot.com/REST/API/authentication.html';
         this.properties = [
             {
                 displayName: 'Server URL',

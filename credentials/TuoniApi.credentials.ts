@@ -13,7 +13,7 @@ export class TuoniApi implements ICredentialType {
 
 	icon: Icon = { light: 'file:../icons/tuoni.svg', dark: 'file:../icons/tuoni.dark.svg' };
 
-	documentationUrl = 'https://github.com/tuoni/tuoni';
+	documentationUrl = 'https://docs.shelldot.com/REST/API/authentication.html';
 
 	properties: INodeProperties[] = [
 		{
