@@ -2,13 +2,7 @@
 
 <div align="center">
 
-<table style="border: none; border-collapse: collapse;">
-<tr style="border: none;">
-<td align="center" style="border: none;"><img src="docs/images/tuoni.svg" width="120" /></td>
-<td align="center" style="border: none;"><img src="docs/images/plus.svg" width="60" /></td>
-<td align="center" style="border: none;"><img src="docs/images/n8n.svg" width="120" /></td>
-</tr>
-</table>
+<img src="docs/images/tuoni.svg" width="120" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="docs/images/plus.svg" width="60" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="docs/images/n8n.svg" width="120" />
 
 </div>
 
