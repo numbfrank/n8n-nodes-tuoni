@@ -1,8 +1,18 @@
-<div align="center" style="display: flex; align-items: center; justify-content: center; gap: 20px; padding: 20px 0;">
-  <img src="docs/images/tuoni.svg" alt="Tuoni" width="120" />
-  <img src="docs/images/plus.svg" alt="plus" width="60" />
-  <img src="docs/images/n8n.svg" alt="n8n" width="120" />
+<br>
+
+<div align="center">
+
+<table>
+<tr>
+<td align="center"><img src="docs/images/tuoni.svg" width="120" /></td>
+<td align="center"><img src="docs/images/plus.svg" width="60" /></td>
+<td align="center"><img src="docs/images/n8n.svg" width="120" /></td>
+</tr>
+</table>
+
 </div>
+
+<br>
 <br>
 
 # Tuoni Community Node for n8n
