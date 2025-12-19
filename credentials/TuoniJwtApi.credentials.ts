@@ -1,18 +1,17 @@
 import type {
-	IAuthenticate,
 	Icon,
 	ICredentialDataDecryptedObject,
 	ICredentialTestRequest,
 	ICredentialType,
-	IDataObject,
 	IHttpRequestHelper,
+	IHttpRequestOptions,
 	INodeProperties,
 } from 'n8n-workflow';
 
 export class TuoniJwtApi implements ICredentialType {
 	name = 'tuoniJwtApi';
 
-	displayName = 'Tuoni (JWT) API';
+	displayName = 'Tuoni API - JWT Authentication API';
 
 	icon: Icon = { light: 'file:../icons/tuoni.svg', dark: 'file:../icons/tuoni.dark.svg' };
 
@@ -53,19 +52,19 @@ export class TuoniJwtApi implements ICredentialType {
 			displayName: 'Token',
 			name: 'token',
 			type: 'hidden',
-			typeOptions: { password: true },
+			typeOptions: {
+				expirable: true,
+			},
 			default: '',
-			description: 'JWT token (automatically populated)',
 		},
 	];
 
-	// Enable generic auth handling so credentials hook applies to requests
-	genericAuth = true;
-
-	preAuthentication = async function (
+	// preAuthentication runs when token is empty or expired
+	// It fetches a fresh JWT token from the Tuoni server
+	async preAuthentication(
 		this: IHttpRequestHelper,
 		credentials: ICredentialDataDecryptedObject,
-	): Promise<IDataObject> {
+	) {
 		const token = (await this.helpers.httpRequest({
 			baseURL: credentials.serverUrl as string,
 			url: '/api/v1/auth/login',
@@ -80,54 +79,36 @@ export class TuoniJwtApi implements ICredentialType {
 			json: false,
 			skipSslCertificateValidation: Boolean(credentials.ignoreSSL),
 		})) as string;
-		// Return all credentials with token merged
-		return { ...credentials, token };
-	};
 
-	authenticate: IAuthenticate = async (
+		return { token };
+	}
+
+	// authenticate injects the token and SSL settings into every request
+	async authenticate(
 		credentials: ICredentialDataDecryptedObject,
-		requestOptions,
-	) => {
-		const next: typeof requestOptions = { ...requestOptions };
-		next.headers = { ...(next.headers ?? {}) };
-		next.skipSslCertificateValidation = Boolean(credentials.ignoreSSL);
-		
-		const url = next.url || '';
-		const isLoginRequest = url.includes('/auth/login');
-		
-		if (isLoginRequest) {
-			// Login request - keep Basic auth
-			if (!next.auth) {
-				next.auth = {
-					username: String(credentials.username ?? ''),
-					password: String(credentials.password ?? ''),
-					sendImmediately: true,
-				};
-			}
-		} else {
-			// Regular request - use Bearer token
-			const token = String(credentials.token ?? '');
-			
-			(next.headers as Record<string, string>).Authorization = `Bearer ${token}`;
-			delete next.auth;
-		}
+		requestOptions: IHttpRequestOptions,
+	): Promise<IHttpRequestOptions> {
+		const token = String(credentials.token ?? '');
 
-		return next;
-	};
+		return {
+			...requestOptions,
+			headers: {
+				...requestOptions.headers,
+				Authorization: `Bearer ${token}`,
+			},
+			skipSslCertificateValidation: Boolean(credentials.ignoreSSL),
+		};
+	}
 
 	test: ICredentialTestRequest = {
 		request: {
 			baseURL: '={{$credentials?.serverUrl}}',
-			url: '/api/v1/auth/login',
-			method: 'POST',
-			auth: {
-				username: '={{$credentials?.username}}',
-				password: '={{$credentials?.password}}',
-			},
+			url: '/api/v1/agents',
+			method: 'GET',
 			headers: {
-				Accept: 'text/plain',
+				Accept: 'application/json',
 			},
-			json: false,
+			json: true,
 			skipSslCertificateValidation: '={{$credentials?.ignoreSSL}}',
 		},
 	};

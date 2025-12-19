@@ -8,8 +8,8 @@ COPY --chown=node:node . /tmp/n8n-nodes-tuoni
 WORKDIR /tmp/n8n-nodes-tuoni
 
 # Install dependencies and build
-RUN npm install && \
-    npm run build && \
+RUN npm install --include=dev && \
+    ./node_modules/.bin/n8n-node build && \
     npm link
 
 # Link to n8n's custom nodes directory
@@ -25,5 +25,3 @@ WORKDIR /home/node
 
 # Expose n8n port
 EXPOSE 5678
-
-CMD ["n8n"]
