@@ -3,6 +3,7 @@
 <img src="docs/images/tuoni.svg" width="120" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="docs/images/plus.svg" width="60" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="docs/images/n8n.svg" width="120" />
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![npm](https://img.shields.io/npm/v/n8n-nodes-tuoni)](https://www.npmjs.com/package/n8n-nodes-tuoni)
 [![n8n](https://img.shields.io/badge/n8n-%3E%3D2.0.0-blue)](https://n8n.io)
 [![Beta](https://img.shields.io/badge/Status-Beta-orange)](https://github.com/numbfrank/n8n-nodes-tuoni)
 
@@ -42,7 +43,19 @@ This n8n node allows you to automate Tuoni operations, integrate with other tool
 
 ## Installation
 
-> **Note:** This package is currently in beta and not yet published to npm. You'll need to install it locally.
+### Install from npm (Recommended)
+
+Install the package in your n8n custom nodes directory:
+
+```bash
+# Navigate to your n8n custom nodes directory
+cd ~/.n8n/custom
+
+# Install the package
+npm install n8n-nodes-tuoni
+```
+
+Then restart n8n to load the new node.
 
 ### Quick Start with Docker 🐳
 
@@ -73,7 +86,9 @@ Create a `.env` file or set these environment variables to customize your setup:
 | `N8N_PORT`                | Port for n8n web interface           | `5678`     |
 | `GENERIC_TIMEZONE`        | Timezone for n8n                     | `UTC`      |
 
-### Local Installation
+### Development Installation
+
+For contributing or local development:
 
 1. **Clone the repository:**
 
@@ -95,8 +110,8 @@ Create a `.env` file or set these environment variables to customize your setup:
    # Create a symbolic link
    npm link
 
-   # In your n8n installation directory (or global n8n)
-   cd ~/.n8n/nodes  # or your custom n8n nodes directory
+   # In your n8n custom nodes directory
+   cd ~/.n8n/custom
    npm link n8n-nodes-tuoni
    ```
 
