@@ -65,7 +65,7 @@ Create a new credential of type “Tuoni API” in n8n:
 - **Password**: Your Tuoni password
 - **Ignore SSL Issues**: Enable this for self-signed certificates (common in local/test environments)
 - **Authentication Method**: Choose between:
-  - **Basic (Username/Password)** - Recommended, works for all basic operations
+  - **Basic (Username/Password)** - Works for all basic operations
   - **JWT** - Obtains and caches a JWT token for subsequent requests
 
 The credential includes a built-in test that validates connectivity to your Tuoni server. In Basic mode, it tests against `/api/v1/agents`. In JWT mode, it performs a login to verify credentials and obtain a token.
