@@ -1,6 +1,6 @@
 <div align="center" style="display: flex; align-items: center; justify-content: center; gap: 20px;">
   <img src="docs/images/tuoni.svg" alt="Tuoni" width="120" />
-  <span style="font-size: 4em; font-weight: bold; line-height: 1;">+</span>
+  <img src="docs/images/plus.svg" alt="plus" width="60" />
   <img src="docs/images/n8n.svg" alt="n8n" width="120" />
 </div>
 <br>
@@ -64,6 +64,7 @@ This node exposes multiple resource categories. Each category includes common CR
 <div align="center">
 
 ![Available Resources and Actions](docs/images/ActionsMenu.png)
+
 </div>
 
 ## Usage
