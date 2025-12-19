@@ -1,6 +1,6 @@
 {
     "name": "n8n-nodes-tuoni",
-    "version": "0.1.0",
+    "version": "0.2.0",
     "description": "Tuoni node for n8n",
     "license": "MIT",
     "homepage": "",
@@ -15,15 +15,15 @@
         "type": "git",
         "url": "https://github.com/numbfrank/n8n-nodes-tuoni"
     },
-   "scripts": {
-		"build": "n8n-node build",
-		"build:watch": "tsc --watch",
-		"dev": "n8n-node dev",
-		"lint": "n8n-node lint",
+    "scripts": {
+        "build": "n8n-node build",
+        "build:watch": "tsc --watch",
+        "dev": "n8n-node dev",
+        "lint": "n8n-node lint",
         "lint:fix": "n8n-node lint --fix",
-		"release": "n8n-node release",
-		"prepublishOnly": "n8n-node prerelease"
-	},
+        "release": "n8n-node release",
+        "prepublishOnly": "n8n-node prerelease"
+    },
     "files": [
         "dist"
     ],
