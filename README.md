@@ -1,12 +1,8 @@
-<br>
-
 <div align="center">
 
 <img src="docs/images/tuoni.svg" width="120" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="docs/images/plus.svg" width="60" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="docs/images/n8n.svg" width="120" />
 
 </div>
-
-<br>
 <br>
 
 # Tuoni Community Node for n8n
