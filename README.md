@@ -1,3 +1,10 @@
+<div align="center" style="display: flex; align-items: center; justify-content: center; gap: 20px;">
+  <img src="docs/images/tuoni.svg" alt="Tuoni" width="120" />
+  <span style="font-size: 4em; font-weight: bold; line-height: 1;">+</span>
+  <img src="docs/images/n8n.svg" alt="n8n" width="120" />
+</div>
+<br>
+
 # Tuoni Community Node for n8n
 
 > **⚠️ BETA SOFTWARE**: This package is currently in beta. While functional, you may encounter issues or missing features. Please [open an issue](https://github.com/numbfrank/n8n-nodes-tuoni/issues) if you find any bugs or have feature requests. Contributions are welcome!
@@ -54,12 +61,23 @@ This node exposes multiple resource categories. Each category includes common CR
 - Users: list/get/me, create/update, change password (self or admin).
 - IPs: list known IPs.
 
+<div align="center">
+
+![Available Resources and Actions](docs/images/ActionsMenu.png)
+</div>
+
 ## Usage
 
 1. Add the “Tuoni” node to a workflow and select your “Tuoni API” credential.
 2. Choose a **Resource** (e.g., Agent, Command, Listener), then an **Operation** (e.g., Get All, Create, Update).
 3. Fill in required parameters based on the operation.
 4. Execute the workflow to interact with the Tuoni server.
+
+<div align="center">
+
+![Listener Operations Example](docs/images/GetListeners.png)
+
+</div>
 
 ### Example Workflows
 
@@ -88,6 +106,12 @@ This node exposes multiple resource categories. Each category includes common CR
 - **User → Create** and **User → Update** for user management
 - **Setting → Update Multiple** for bulk configuration changes
 - **Script → Get Logs** to monitor script execution and debugging
+
+<div align="center">
+
+![Example Workflow: Automated Operations](docs/images/Example.png)
+
+</div>
 
 ## Compatibility
 
