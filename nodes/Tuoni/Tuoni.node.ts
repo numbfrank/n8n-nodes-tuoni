@@ -34,7 +34,11 @@ export class Tuoni implements INodeType {
 		outputs: [NodeConnectionTypes.Main],
 		credentials: [
 			{
-				name: 'tuoniApi',
+				name: 'tuoniBasicApi',
+				required: true,
+			},
+			{
+				name: 'tuoniJwtApi',
 				required: true,
 			},
 		],
