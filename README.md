@@ -28,9 +28,37 @@ This n8n community node integrates with [Tuoni](https://github.com/shell-dot/tuo
 
 ## Installation
 
-Follow the official guide for community nodes: https://docs.n8n.io/integrations/community-nodes/installation/
+> **Note:** This package is currently in beta and not yet published to npm. You'll need to install it locally.
 
-Once installed, search for the node named “Tuoni” in the n8n editor.
+### Local Installation
+
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/numbfrank/n8n-nodes-tuoni.git
+   cd n8n-nodes-tuoni
+   ```
+
+2. **Install dependencies and build:**
+   ```bash
+   npm install
+   npm run build
+   ```
+
+3. **Link the package to your n8n installation:**
+   ```bash
+   # Create a symbolic link
+   npm link
+   
+   # In your n8n installation directory (or global n8n)
+   cd ~/.n8n/nodes  # or your custom n8n nodes directory
+   npm link n8n-nodes-tuoni
+   ```
+
+4. **Restart n8n** to load the new node.
+
+5. Once installed, search for the node named "Tuoni" in the n8n editor.
+
+For more details, see the [official community nodes guide](https://docs.n8n.io/integrations/community-nodes/installation/).
 
 ## Credentials
 
