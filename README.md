@@ -26,25 +26,45 @@ This n8n community node integrates with [Tuoni](https://github.com/shell-dot/tuo
 
 > **Note:** This package is currently in beta and not yet published to npm. You'll need to install it locally.
 
+### Quick Start with Docker 🐳
+
+The fastest way to get started:
+
+```bash
+# Clone the repository
+git clone https://github.com/numbfrank/n8n-nodes-tuoni.git
+cd n8n-nodes-tuoni
+
+# Start n8n with the Tuoni node pre-installed
+docker-compose up -d
+```
+
+n8n will be available at `http://localhost:5678`
+
+**Default credentials:** admin / changeme (set via `.env` file or environment variables)
+
 ### Local Installation
 
 1. **Clone the repository:**
+
    ```bash
    git clone https://github.com/numbfrank/n8n-nodes-tuoni.git
    cd n8n-nodes-tuoni
    ```
 
 2. **Install dependencies and build:**
+
    ```bash
    npm install
    npm run build
    ```
 
 3. **Link the package to your n8n installation:**
+
    ```bash
    # Create a symbolic link
    npm link
-   
+
    # In your n8n installation directory (or global n8n)
    cd ~/.n8n/nodes  # or your custom n8n nodes directory
    npm link n8n-nodes-tuoni
