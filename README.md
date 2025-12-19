@@ -2,6 +2,10 @@
 
 <img src="docs/images/tuoni.svg" width="120" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="docs/images/plus.svg" width="60" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="docs/images/n8n.svg" width="120" />
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![n8n](https://img.shields.io/badge/n8n-%3E%3D2.0.0-blue)](https://n8n.io)
+[![Beta](https://img.shields.io/badge/Status-Beta-orange)](https://github.com/numbfrank/n8n-nodes-tuoni)
+
 </div>
 <br>
 
@@ -13,14 +17,28 @@ This n8n community node integrates with [Tuoni](https://github.com/shell-dot/tuo
 
 [n8n](https://n8n.io/) is a [fair-code licensed](https://docs.n8n.io/sustainable-use-license/) workflow automation platform.
 
+- [What is Tuoni?](#what-is-tuoni)
 - [Installation](#installation)
 - [Credentials](#credentials)
 - [Operations](#operations)
 - [Usage](#usage)
+- [Troubleshooting](#troubleshooting)
 - [Compatibility](#compatibility)
 - [Contributing](#contributing)
 - [License](#license)
 - [Resources](#resources)
+
+## What is Tuoni?
+
+[Tuoni](https://github.com/shell-dot/tuoni) is a modern, modular command and control (C2) framework designed for penetration testing and red team operations. It provides:
+
+- **Agent Management**: Deploy and control agents on target systems
+- **Command Execution**: Run commands and scripts on compromised hosts
+- **Listener/Payload Generation**: Create and manage listeners and payloads
+- **Discovery**: Enumerate hosts, services, and credentials
+- **Plugin Architecture**: Extend functionality with custom plugins
+
+This n8n node allows you to automate Tuoni operations, integrate with other tools, and build complex security workflows.
 
 ## Installation
 
@@ -36,12 +54,24 @@ git clone https://github.com/numbfrank/n8n-nodes-tuoni.git
 cd n8n-nodes-tuoni
 
 # Start n8n with the Tuoni node pre-installed
-docker-compose up -d
+docker compose up -d
 ```
 
 n8n will be available at `http://localhost:5678`
 
 **Default credentials:** admin / changeme (set via `.env` file or environment variables)
+
+#### Environment Variables
+
+Create a `.env` file or set these environment variables to customize your setup:
+
+| Variable                  | Description                          | Default    |
+| ------------------------- | ------------------------------------ | ---------- |
+| `N8N_BASIC_AUTH_USER`     | n8n admin username                   | `admin`    |
+| `N8N_BASIC_AUTH_PASSWORD` | n8n admin password                   | `changeme` |
+| `N8N_SECURE_COOKIE`       | Set to `false` for local HTTP access | `true`     |
+| `N8N_PORT`                | Port for n8n web interface           | `5678`     |
+| `GENERIC_TIMEZONE`        | Timezone for n8n                     | `UTC`      |
 
 ### Local Installation
 
@@ -78,17 +108,16 @@ For more details, see the [official community nodes guide](https://docs.n8n.io/i
 
 ## Credentials
 
-Create a new credential of type “Tuoni API” in n8n:
+Create a new credential of type "Tuoni API - JWT Authentication API" in n8n:
 
 - **Server URL**: Base URL to your Tuoni instance (e.g., `https://localhost:8443` or `https://tuoni.example.com:8443`)
 - **Username**: Your Tuoni username
 - **Password**: Your Tuoni password
 - **Ignore SSL Issues**: Enable this for self-signed certificates (common in local/test environments)
-- **Authentication Method**: Choose between:
-  - **Basic (Username/Password)** - Works for all basic operations
-  - **JWT** - Obtains and caches a JWT token for subsequent requests
 
-The credential includes a built-in test that validates connectivity to your Tuoni server. In Basic mode, it tests against `/api/v1/agents`. In JWT mode, it performs a login to verify credentials and obtain a token.
+The credential uses JWT authentication - it automatically obtains a token from your Tuoni server when needed and includes it with all API requests. The token is cached and refreshed automatically when expired.
+
+The credential includes a built-in test that validates connectivity to your Tuoni server by performing a login and querying the agents endpoint.
 
 ## Operations
 
@@ -117,7 +146,7 @@ This node exposes multiple resource categories. Each category includes common CR
 
 ## Usage
 
-1. Add the “Tuoni” node to a workflow and select your “Tuoni API” credential.
+1. Add the "Tuoni" node to a workflow and select your "Tuoni API - JWT Authentication API" credential.
 2. Choose a **Resource** (e.g., Agent, Command, Listener), then an **Operation** (e.g., Get All, Create, Update).
 3. Fill in required parameters based on the operation.
 4. Execute the workflow to interact with the Tuoni server.
@@ -162,13 +191,50 @@ This node exposes multiple resource categories. Each category includes common CR
 
 </div>
 
+## Troubleshooting
+
+### SSL Certificate Errors
+
+**Error:** `DEPTH_ZERO_SELF_SIGNED_CERT` or `self-signed certificate`
+
+**Solution:** Enable "Ignore SSL Issues" in your Tuoni credential settings. This is common when using self-signed certificates in development or internal environments.
+
+### 401 Unauthorized Errors
+
+**Error:** `401 Unauthorized` when executing node operations
+
+**Solutions:**
+
+- Verify your username and password are correct
+- Test your credentials using the "Test" button in the credential editor
+- Ensure the Tuoni server is running and accessible
+- Check that your user account has the necessary permissions
+
+### Connection Refused
+
+**Error:** `ECONNREFUSED` or `Connection refused`
+
+**Solutions:**
+
+- Verify the Server URL is correct (including port, typically 8443)
+- Ensure the Tuoni server is running
+- Check firewall rules allow traffic from n8n to the Tuoni server
+- If using Docker, ensure network connectivity between containers
+
+### Token Expiration
+
+JWT tokens are automatically refreshed when they expire. If you encounter persistent authentication issues, try:
+
+1. Delete and recreate the credential
+2. Verify the Tuoni server's clock is synchronized
+
 ## Compatibility
 
-Tested with n8n 1.60.0 and later. Community nodes generally follow n8n’s minor version compatibility, but please pin versions as needed in your environment.
+Tested with n8n 2.0.0 and later. Community nodes generally follow n8n's minor version compatibility, but please pin versions as needed in your environment.
 
 **Requirements:**
 
-- n8n >= 1.60.0
+- n8n >= 2.0.0
 - Tuoni with REST API enabled (typically running on port 8443)
 - Network access from your n8n instance to the Tuoni server
 

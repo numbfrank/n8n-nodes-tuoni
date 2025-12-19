@@ -37,7 +37,7 @@ class Tuoni {
             outputs: [n8n_workflow_1.NodeConnectionTypes.Main],
             credentials: [
                 {
-                    name: 'tuoniApi',
+                    name: 'tuoniJwtApi',
                     required: true,
                 },
             ],

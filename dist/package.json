@@ -31,7 +31,7 @@
         "n8nNodesApiVersion": 1,
         "strict": true,
         "credentials": [
-            "dist/credentials/TuoniApi.credentials.js"
+            "dist/credentials/TuoniJwtApi.credentials.js"
         ],
         "nodes": [
             "dist/nodes/Tuoni/Tuoni.node.js"
