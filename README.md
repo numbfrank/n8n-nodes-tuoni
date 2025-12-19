@@ -1,4 +1,4 @@
-<div align="center" style="display: flex; align-items: center; justify-content: center; gap: 20px;">
+<div align="center" style="display: flex; align-items: center; justify-content: center; gap: 20px; padding: 20px 0;">
   <img src="docs/images/tuoni.svg" alt="Tuoni" width="120" />
   <img src="docs/images/plus.svg" alt="plus" width="60" />
   <img src="docs/images/n8n.svg" alt="n8n" width="120" />
