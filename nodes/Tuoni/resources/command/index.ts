@@ -20,6 +20,8 @@ export const commandDescription: INodeProperties[] = [
 					request: {
 						method: 'POST',
 						url: '=/api/v1/agents/{{$parameter.guid}}/commands',
+						json: true,
+						body: '={{ typeof $parameter.commandData === "string" ? JSON.parse($parameter.commandData) : $parameter.commandData }}',
 					},
 				},
 			},
@@ -68,6 +70,8 @@ export const commandDescription: INodeProperties[] = [
 					request: {
 						method: 'POST',
 						url: '=/api/v1/commands/{{$parameter.commandId}}/update',
+						json: true,
+						body: '={{ typeof $parameter.commandData === "string" ? JSON.parse($parameter.commandData) : $parameter.commandData }}',
 					},
 				},
 			},
@@ -114,10 +118,5 @@ export const commandDescription: INodeProperties[] = [
 		},
 		default: '{}',
 		description: 'Command data/payload',
-		routing: {
-			send: {
-				type: 'body',
-			},
-		},
 	},
 ];
